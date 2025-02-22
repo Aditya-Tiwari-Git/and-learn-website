@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Navbar from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
 
 function Router() {
   return (
@@ -18,8 +19,13 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Navbar />
-      <Router />
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-grow">
+          <Router />
+        </div>
+        <Footer />
+      </div>
       <Toaster />
     </QueryClientProvider>
   );

@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -20,7 +21,7 @@ type ContactForm = z.infer<typeof contactSchema>;
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  
+
   const form = useForm<ContactForm>({
     resolver: zodResolver(contactSchema)
   });
@@ -28,8 +29,7 @@ export default function Contact() {
   const onSubmit = async (data: ContactForm) => {
     setIsSubmitting(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await apiRequest('POST', '/api/contact', data);
       toast({
         title: "Message sent!",
         description: "We'll get back to you soon.",
